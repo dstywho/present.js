@@ -1,0 +1,57 @@
+<html>
+<head>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+</head>
+
+<body>
+<script>
+function SlideShow(jq_slides){
+  this.jq_slides = jq_slides; 
+  this.jq_slides.addClass('slide');
+}
+
+SlideShow.prototype.currentSlide= function(){
+  return this.jq_slides.find('.displayed');
+}
+
+SlideShow.prototype.previous = function(){
+  return this.prev();
+}
+
+SlideShow.prototype.prev = function(){
+  var jq_prevSlide = this.currentSlide().prev('div');
+  currentSlide().removeClass('displayed');
+  jq_prevSlide.addClass('displayed'); 
+}
+
+SlideShow.prototype.next = function(){
+  var jq_nextSlide = this.currentSlide().next('div');
+  currentSlide().removeClass('displayed');
+  jq_nextSlide.addClass('displayed'); 
+}
+
+
+
+  jQuery(document).ready(function(){
+    jQuery('.slides div')
+  });
+</script>
+<style>
+.slides{height:100%; width:100%;position:fixed;}
+.slide{display:none;} 
+.displayed{display:inline !important; } 
+</style>
+<div class="slides">
+<div>
+  <h1> Hi</h1>
+  <h3> by blah</h3>
+</div>
+
+<div>
+
+</div>
+
+</div>
+</body>
+
+<html>
