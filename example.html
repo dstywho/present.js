@@ -2,9 +2,8 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1"> 
-<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css" />
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
-<script type="text/javascript" src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"></script>
+<script type="text/javascript" src="jquery-1.6.4.min.js"></script>
+<script type="text/javascript" src="jquery.mobile-1.0.min.js"></script>
 <link href="css-reset/reset.css" title="compact" rel="stylesheet" type="text/css">
 </head>
 
@@ -34,13 +33,14 @@ SlideShow.prototype.bindDeviceEvents = function(){
 SlideShow.prototype.bindEvents = function(){
   var that = this;
 
+/*
   jQuery('body').bind('click',function(e){
-   alert(this.tagName)
    e.stopPropagation();
    that.next(); 
   });
+*/
+  this.bindDeviceEvents();
 
-/*
   jQuery(document).keydown(function(e){
     if (e.keyCode == 37) { 
        that.prev();
@@ -50,7 +50,6 @@ SlideShow.prototype.bindEvents = function(){
        return false;
     }
   }); 
-*/
 }
 
 SlideShow.prototype.currentSlide= function(){
@@ -71,7 +70,6 @@ SlideShow.prototype.prev = function(){
 
 SlideShow.prototype.next = function(){
   var jq_nextSlide = this.currentSlide().next('div');
-  alert('in')
   if(jq_nextSlide.length > 0){
     this.currentSlide().removeClass('displayed');
     jq_nextSlide.addClass('displayed'); 
@@ -87,8 +85,7 @@ SlideShow.prototype.show = function(index){
 
 
 jQuery('#slides').live('pageinit',function(){
-    alert('ready');
-    var slideShow = new SlideShow(jQuery('.slides div'));
+    var slideShow = new SlideShow(jQuery('.slides > div'));
     slideShow.show(0);
     slideShow.bindEvents();
 });
@@ -123,6 +120,14 @@ body{
   background-color:#333;
   color:#ddd;
 }
+
+.column{
+  position:relative;
+  max-width:47%;
+  float:left;
+  margin:1%;
+}
+
 </style>
 
 <div data-role="page" id="slides" class="slides">
@@ -138,6 +143,16 @@ body{
   <div>
     <h1>Slide 3</h1>
     <p>Nulla eiusmod ad thundercats, id put a bird on it laboris sartorial est gluten-free williamsburg cred in mustache. Fap stumptown et tumblr, duis keffiyeh terry richardson esse banksy adipisicing est mustache brooklyn. Aliqua elit do pariatur synth. Mustache high life labore, single-origin coffee blog wolf nesciunt 8-bit vice cred four loko cosby sweater mlkshk butcher viral. Ad incididunt sartorial photo booth reprehenderit. Etsy dreamcatcher keytar jean shorts. Brunch mollit ut, in quis pitchfork nulla iphone bicycle rights organic DIY consequat mustache.</p>
+  </div>
+
+  <div>
+    <h1>Slide 4</h1>
+    <div  class="column">
+      <p>Nulla eiusmod ad thundercats, id put a bird on it laboris sartorial est gluten-free williamsburg cred in mustache. Fap stumptown et tumblr, duis keffiyeh terry richardson esse banksy adipisicing est mustache brooklyn. Aliqua elit do pariatur synth. Mustache high life labore, single-origin coffee blog wolf nesciunt 8-bit vice cred four loko cosby sweater mlkshk butcher viral. Ad incididunt sartorial photo booth reprehenderit. Etsy dreamcatcher keytar jean shorts. Brunch mollit ut, in quis pitchfork nulla iphone bicycle rights organic DIY consequat mustache.</p>
+    </div>
+    <div  class="column">
+      <p>Nulla eiusmod ad thundercats, id put a bird on it laboris sartorial est gluten-free williamsburg cred in mustache. Fap stumptown et tumblr, duis keffiyeh terry richardson esse banksy adipisicing est mustache brooklyn. Aliqua elit do pariatur synth. Mustache high life labore, single-origin coffee blog wolf nesciunt 8-bit vice cred four loko cosby sweater mlkshk butcher viral. Ad incididunt sartorial photo booth reprehenderit. Etsy dreamcatcher keytar jean shorts. Brunch mollit ut, in quis pitchfork nulla iphone bicycle rights organic DIY consequat mustache.</p>
+    </div>
   </div>
 
 </div>
