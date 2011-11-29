@@ -1,0 +1,21 @@
+
+.slide{display:none;} 
+.slide h1{ font-size:620%;}
+.displayed{
+  display:block !important;
+  height:79.99%; 
+  width:69.99%;
+  padding-left:15%;
+  padding-right:15%;
+  padding-top:5%;
+  padding-bottom:5%;
+  position:absolute;
+  font-size:150%;
+} 
+.column{
+  position:relative;
+  max-width:47%;
+  float:left;
+  margin:1%;
+}
+

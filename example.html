@@ -4,85 +4,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1"> 
 <script type="text/javascript" src="jquery-1.6.4.min.js"></script>
 <script type="text/javascript" src="jquery.mobile-1.0.min.js"></script>
+<script type="text/javascript" src="present.js"></script>
 <link href="css-reset/reset.css" title="compact" rel="stylesheet" type="text/css">
+<link href="present.css" title="compact" rel="stylesheet" type="text/css">
 </head>
 
 <body>
 <script>
-   document.addEventListener("deviceready", onDeviceReady, false);
-
-
-function SlideShow(jq_slides){
-  this.jq_slides = jq_slides; 
-  this.jq_slides.addClass('slide');
+document.addEventListener("deviceready", onDeviceReady, false);
+function onDeviceReady() {
+  alert('deviceready');
 }
-
-SlideShow.prototype.bindDeviceEvents = function(){
-  var that = this;
-  this.jq_slides.live('tap',function(e){
-   that.next(); 
-  });
-  this.jq_slides.live('swipeleft',function(e){
-   that.next(); 
-  });
-  this.jq_slides.live('swiperight',function(e){
-   that.prev(); 
-  });
-} 
-
-SlideShow.prototype.bindEvents = function(){
-  var that = this;
-
-/*
-  jQuery('body').bind('click',function(e){
-   e.stopPropagation();
-   that.next(); 
-  });
-*/
-  this.bindDeviceEvents();
-
-  jQuery(document).keydown(function(e){
-    if (e.keyCode == 37) { 
-       that.prev();
-       return false;
-    }else if (e.keyCode == 39) { 
-       that.next();
-       return false;
-    }
-  }); 
-}
-
-SlideShow.prototype.currentSlide= function(){
-  return this.jq_slides.filter('.displayed');
-}
-
-SlideShow.prototype.previous = function(){
-  return this.prev();
-}
-
-SlideShow.prototype.prev = function(){
-  var jq_prevSlide = this.currentSlide().prev('div');
-  if(jq_prevSlide.length > 0){
-    this.currentSlide().removeClass('displayed');
-    jq_prevSlide.addClass('displayed'); 
-  }
-}
-
-SlideShow.prototype.next = function(){
-  var jq_nextSlide = this.currentSlide().next('div');
-  if(jq_nextSlide.length > 0){
-    this.currentSlide().removeClass('displayed');
-    jq_nextSlide.addClass('displayed'); 
-  }
-}
-
-
-SlideShow.prototype.show = function(index){
-  var jq_pickedSlide = jQuery(this.jq_slides.get(index));
-  this.currentSlide().removeClass('displayed');
-  jq_pickedSlide.addClass('displayed'); 
-}
-
 
 jQuery('#slides').live('pageinit',function(){
     var slideShow = new SlideShow(jQuery('.slides > div'));
@@ -90,27 +22,10 @@ jQuery('#slides').live('pageinit',function(){
     slideShow.bindEvents();
 });
 
-function onDeviceReady() {
-  alert('deviceready');
-}
 </script>
 
 <style>
-.slide{display:none;} 
-.slide h1{ font-size:820%;}
-.displayed{
-  display:block !important;
-  height:79.99%; 
-  width:69.99%;
-  padding-left:15%;
-  padding-right:15%;
-  padding-top:5%;
-  padding-bottom:5%;
-  position:absolute;
-  font-size:150%;
-} 
-
-/*custom*/
+/*
 .slide{
   color:#dfdfdf;
   background-color:#111;
@@ -120,20 +35,13 @@ body{
   background-color:#333;
   color:#ddd;
 }
-
-.column{
-  position:relative;
-  max-width:47%;
-  float:left;
-  margin:1%;
-}
-
+*/
 </style>
 
 <div data-role="page" id="slides" class="slides">
   <div>
-    <h1> Hi</h1>
-    <h3> by blah</h3>
+    <h1>Hi</h1>
+    <h3>by blah</h3>
   </div>
 
   <div>
