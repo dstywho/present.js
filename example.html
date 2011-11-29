@@ -1,17 +1,60 @@
+<!DOCTYPE html> 
 <html>
 <head>
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1"> 
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.css" />
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.6.4.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/mobile/1.0/jquery.mobile-1.0.min.js"></script>
+<link href="css-reset/reset.css" title="compact" rel="stylesheet" type="text/css">
 </head>
 
 <body>
 <script>
+   document.addEventListener("deviceready", onDeviceReady, false);
+
+
 function SlideShow(jq_slides){
   this.jq_slides = jq_slides; 
   this.jq_slides.addClass('slide');
 }
 
+SlideShow.prototype.bindDeviceEvents = function(){
+  var that = this;
+  this.jq_slides.live('tap',function(e){
+   that.next(); 
+  });
+  this.jq_slides.live('swipeleft',function(e){
+   that.next(); 
+  });
+  this.jq_slides.live('swiperight',function(e){
+   that.prev(); 
+  });
+} 
+
+SlideShow.prototype.bindEvents = function(){
+  var that = this;
+
+  jQuery('body').bind('click',function(e){
+   alert(this.tagName)
+   e.stopPropagation();
+   that.next(); 
+  });
+
+/*
+  jQuery(document).keydown(function(e){
+    if (e.keyCode == 37) { 
+       that.prev();
+       return false;
+    }else if (e.keyCode == 39) { 
+       that.next();
+       return false;
+    }
+  }); 
+*/
+}
+
 SlideShow.prototype.currentSlide= function(){
-  return this.jq_slides.find('.displayed');
+  return this.jq_slides.filter('.displayed');
 }
 
 SlideShow.prototype.previous = function(){
@@ -20,36 +63,82 @@ SlideShow.prototype.previous = function(){
 
 SlideShow.prototype.prev = function(){
   var jq_prevSlide = this.currentSlide().prev('div');
-  currentSlide().removeClass('displayed');
-  jq_prevSlide.addClass('displayed'); 
+  if(jq_prevSlide.length > 0){
+    this.currentSlide().removeClass('displayed');
+    jq_prevSlide.addClass('displayed'); 
+  }
 }
 
 SlideShow.prototype.next = function(){
   var jq_nextSlide = this.currentSlide().next('div');
-  currentSlide().removeClass('displayed');
-  jq_nextSlide.addClass('displayed'); 
+  alert('in')
+  if(jq_nextSlide.length > 0){
+    this.currentSlide().removeClass('displayed');
+    jq_nextSlide.addClass('displayed'); 
+  }
 }
 
 
+SlideShow.prototype.show = function(index){
+  var jq_pickedSlide = jQuery(this.jq_slides.get(index));
+  this.currentSlide().removeClass('displayed');
+  jq_pickedSlide.addClass('displayed'); 
+}
 
-  jQuery(document).ready(function(){
-    jQuery('.slides div')
-  });
+
+jQuery('#slides').live('pageinit',function(){
+    alert('ready');
+    var slideShow = new SlideShow(jQuery('.slides div'));
+    slideShow.show(0);
+    slideShow.bindEvents();
+});
+
+function onDeviceReady() {
+  alert('deviceready');
+}
 </script>
+
 <style>
-.slides{height:100%; width:100%;position:fixed;}
 .slide{display:none;} 
-.displayed{display:inline !important; } 
+.slide h1{ font-size:820%;}
+.displayed{
+  display:block !important;
+  height:79.99%; 
+  width:69.99%;
+  padding-left:15%;
+  padding-right:15%;
+  padding-top:5%;
+  padding-bottom:5%;
+  position:absolute;
+  font-size:150%;
+} 
+
+/*custom*/
+.slide{
+  color:#dfdfdf;
+  background-color:#111;
+}
+body{
+  background-color:#111;
+  background-color:#333;
+  color:#ddd;
+}
 </style>
-<div class="slides">
-<div>
-  <h1> Hi</h1>
-  <h3> by blah</h3>
-</div>
 
-<div>
+<div data-role="page" id="slides" class="slides">
+  <div>
+    <h1> Hi</h1>
+    <h3> by blah</h3>
+  </div>
 
-</div>
+  <div>
+    <h1>Slide 2</h1>
+  </div>
+
+  <div>
+    <h1>Slide 3</h1>
+    <p>Nulla eiusmod ad thundercats, id put a bird on it laboris sartorial est gluten-free williamsburg cred in mustache. Fap stumptown et tumblr, duis keffiyeh terry richardson esse banksy adipisicing est mustache brooklyn. Aliqua elit do pariatur synth. Mustache high life labore, single-origin coffee blog wolf nesciunt 8-bit vice cred four loko cosby sweater mlkshk butcher viral. Ad incididunt sartorial photo booth reprehenderit. Etsy dreamcatcher keytar jean shorts. Brunch mollit ut, in quis pitchfork nulla iphone bicycle rights organic DIY consequat mustache.</p>
+  </div>
 
 </div>
 </body>
